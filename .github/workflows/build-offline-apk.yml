@@ -39,16 +39,19 @@ jobs:
       - name: Resolve packages
         run: flutter pub get
 
-      - name: Generate local build values
+      - name: Create local build configuration
         run: |
-          cat > .env <<'ENV'
-          LASTFM_API_KEY=00000000000000000000000000000000
-          LASTFM_API_SECRET=00000000000000000000000000000000
-          HIDE_DONATIONS=1
-          ENABLE_UPDATE_CHECK=0
-          RELEASE_CHANNEL=stable
+          cat > lib/collections/env.g.dart <<'ENV'
+          part of 'env.dart';
+
+          final class _Env {
+            static const String lastFmApiKey = '';
+            static const String lastFmApiSecret = '';
+            static const int _hideDonations = 1;
+            static const String _enableUpdateChecker = '0';
+            static const String _releaseChannel = 'stable';
+          }
           ENV
-          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build ARM64 APK
         run: flutter build apk --release --flavor offline --target-platform android-arm64 --split-per-abi
