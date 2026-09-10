@@ -48,7 +48,7 @@ jobs:
           ENABLE_UPDATE_CHECK=0
           RELEASE_CHANNEL=stable
           ENV
-          dart run build_runner build --delete-conflicting-outputs --build-filter="lib/collections/env.g.dart"
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build ARM64 APK
         run: flutter build apk --release --flavor offline --target-platform android-arm64 --split-per-abi
