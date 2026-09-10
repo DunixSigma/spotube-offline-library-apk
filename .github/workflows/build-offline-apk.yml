@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Get project files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
@@ -38,6 +38,17 @@ jobs:
 
       - name: Resolve packages
         run: flutter pub get
+
+      - name: Generate local build values
+        run: |
+          cat > .env <<'ENV'
+          LASTFM_API_KEY=00000000000000000000000000000000
+          LASTFM_API_SECRET=00000000000000000000000000000000
+          HIDE_DONATIONS=1
+          ENABLE_UPDATE_CHECK=0
+          RELEASE_CHANNEL=stable
+          ENV
+          dart run build_runner build --delete-conflicting-outputs --build-filter="lib/collections/env.g.dart"
 
       - name: Build ARM64 APK
         run: flutter build apk --release --flavor offline --target-platform android-arm64 --split-per-abi
