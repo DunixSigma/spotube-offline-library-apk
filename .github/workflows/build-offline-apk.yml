@@ -54,12 +54,12 @@ jobs:
           ENV
 
       - name: Build ARM64 APK
-        run: flutter build apk --release --flavor offline --target-platform android-arm64 --split-per-abi
+        run: flutter build apk --debug --flavor offline --target-platform android-arm64 --split-per-abi
 
       - name: Keep the APK for download
         uses: actions/upload-artifact@v4
         with:
           name: Spotube-Offline-Library-ARM64-APK
-          path: build/app/outputs/flutter-apk/*arm64-v8a*release.apk
+          path: build/app/outputs/flutter-apk/*arm64-v8a*debug.apk
           if-no-files-found: error
           retention-days: 7
